@@ -1,0 +1,35 @@
+name: Update VPM Listing
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  release:
+    types: [published, edited, deleted]
+
+env:
+  listingRepo: hfcRed/VPM-Listing
+  listingBranch: main
+  listingWorkflow: build-listing.yml
+
+jobs:
+  dispatch:
+    name: Trigger listing rebuild
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.VPM }}
+    steps:
+      - name: Check access token
+        if: env.GH_TOKEN == ''
+        run: |
+          echo "::warning::Secret VPM is not set, so the VPM listing was not rebuilt. Run it by hand: https://github.com/${listingRepo}/actions/workflows/${listingWorkflow}"
+
+      - name: Trigger listing rebuild
+        if: env.GH_TOKEN != ''
+        run: |
+          if ! gh workflow run "$listingWorkflow" --repo "$listingRepo" --ref "$listingBranch"; then
+            echo "::error::Could not dispatch the listing workflow. The VPM token is probably expired or lacks 'Actions: write' on ${listingRepo}. Run it by hand: https://github.com/${listingRepo}/actions/workflows/${listingWorkflow}"
+            exit 1
+          fi
+          echo "Dispatched ${listingWorkflow} on ${listingRepo}: https://github.com/${listingRepo}/actions/workflows/${listingWorkflow}"
+
+# Based on bd_'s action: https://github.com/bdunderscore/modular-avatar/blob/main/.github/workflows/trigger-repo-rebuild.yml

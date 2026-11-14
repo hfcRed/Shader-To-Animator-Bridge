@@ -1,0 +1,28 @@
+{
+  "name": "com.hfcred.shadertoanimatorbridge",
+  "unity": "2022.3",
+  "icon": "",
+  "displayName": "Shader To Animator Bridge",
+  "version": "1.0.0",
+  "description": "Send a value from a shader to your avatar's animator. Generates self-contained systems you can bundle with your packages.",
+  "url": "https://github.com/hfcRed/Shader-To-Animator-Bridge",
+  "license": "MIT",
+  "gitDependencies": {},
+  "vpmDependencies": {
+    "com.vrchat.avatars": ">=3.5.0"
+  },
+  "legacyFolders": {},
+  "legacyFiles": {},
+  "type": "module",
+  "keywords": [
+  "hfcRed",
+  "Shader",
+  "VRChat",
+  "Animator"
+  ],
+  "author": {
+    "name": "hfcRed",
+    "email": "hfcred@gmx.net",
+    "url": "https://hfcred.carrd.co"
+  }
+}
